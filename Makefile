@@ -11,3 +11,6 @@ generate: checkvar
 
 remove: checkvar
 	ansible-playbook -i hosts remove_vms.yml
+
+install: checkvar
+	ansible-playbook -i

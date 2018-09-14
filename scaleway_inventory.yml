@@ -1,0 +1,3 @@
+plugin: scaleway
+regions:
+  - par1
