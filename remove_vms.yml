@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  connection: local
+  tasks: 
+  - name: "Remove my servers"
+    scaleway_compute:
+      name: bdxio{{item}}
+      state: absent
+      image: "e756fdb5-f586-4d9b-8585-817151749a96"
+      organization: 1bb690d9-1039-4316-abec-91903df637af
+      region: par1
+      commercial_type: ARM64-2GB
+    with_sequence: count=4
