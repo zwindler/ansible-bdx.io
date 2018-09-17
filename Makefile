@@ -4,13 +4,23 @@ ifndef SCW_API_KEY
 endif
 
 clean: 
-	rm *.retry
+	rm scaleway/*.retry digitalocean/*.retry
 
 generate: checkvar
-	ansible-playbook -i hosts create_vms.yml
+	date
+	ansible-playbook -i hosts scaleway/create_vms.yml
+	date
 
 remove: checkvar
-	ansible-playbook -i hosts remove_vms.yml
+	date
+	ansible-playbook -i hosts scaleway/remove_vms.yml
+	date
 
-install: checkvar
-	ansible-playbook -i
+inventory: 
+	ansible-inventory --list -i scaleway/inventory.yml
+
+scan: 
+	ansible-inventory --list -i scaleway/inventory.yml | jq -r '.bdxio.hosts | .[]' | xargs ssh-keyscan >> ~/.ssh/known_hosts
+
+install:
+	ansible-playbook -i 
