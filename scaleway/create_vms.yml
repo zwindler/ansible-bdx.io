@@ -10,10 +10,10 @@
     scaleway_compute:
       name: bdxio{{item}}
       state: running
-      image: "e756fdb5-f586-4d9b-8585-817151749a96"
+      image: "37832f54-c18f-4338-a552-113e4302a236"
       organization: 1bb690d9-1039-4316-abec-91903df637af
       region: par1
-      commercial_type: ARM64-2GB
+      commercial_type: START1-S
       wait: true
       tags: bdxio
     with_sequence: count=1
