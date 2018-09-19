@@ -4,7 +4,7 @@ ifndef SCW_API_KEY
 endif
 
 clean: 
-	rm scaleway/*.retry digitalocean/*.retry
+	rm scaleway/*.retry digitalocean/*.retry *.retry
 
 generate: checkvar
 	date
@@ -23,4 +23,4 @@ scan:
 	ansible-inventory --list -i scaleway/inventory.yml | jq -r '.bdxio.hosts | .[]' | xargs ssh-keyscan >> ~/.ssh/known_hosts
 
 install:
-	ansible-playbook -i 
+	ansible-playbook -i scaleway/inventory.yml -l bdxio -u root install_python_and_postgresql.yml
