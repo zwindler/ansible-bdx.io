@@ -16,11 +16,17 @@ remove: checkvar
 	ansible-playbook -i hosts scaleway/remove_vms.yml
 	date
 
-inventory: 
+inventory: checkvar 
 	ansible-inventory --list -i scaleway/inventory.yml
 
-scan: 
+scan: checkvar
 	ansible-inventory --list -i scaleway/inventory.yml | jq -r '.bdxio.hosts | .[]' | xargs ssh-keyscan >> ~/.ssh/known_hosts
 
 install:
 	ansible-playbook -i scaleway/inventory.yml -l bdxio -u root install_python_and_postgresql.yml
+
+copy:
+	ansible-playbook -i scaleway/inventory.yml -l bdxio -u root copy_app.yml
+
+configure:
+	ansible-playbook -i scaleway/inventory.yml -l bdxio -u root configure_postgresql.yml
