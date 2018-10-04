@@ -3,7 +3,7 @@
   vars:
     dbuser: denis
     dbname: mydb
-    dbpass: dqsfkjdsqflkjfqlkjdsflkdsqjflkdsqjfldksjfdsq
+    dbpass: "dsqlkjfdsqlkjfdsqlkfdsqfdsqdsqk,dsqfdsqk,dsk,fdsqfdsqfdsq"
   tasks:
   - name: Configure postgresql for the first time
     shell: initdb /var/lib/pgsql/data > /var/lib/pgsql/initdb.log

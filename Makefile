@@ -11,11 +11,6 @@ generate: checkvar
 	ansible-playbook -i hosts scaleway/create_vms.yml
 	date
 
-remove: checkvar
-	date
-	ansible-playbook -i hosts scaleway/remove_vms.yml
-	date
-
 inventory: checkvar 
 	ansible-inventory --list -i scaleway/inventory.yml
 
@@ -30,3 +25,8 @@ copy:
 
 configure:
 	ansible-playbook -i scaleway/inventory.yml -l bdxio -u root configure_postgresql.yml
+
+remove: checkvar
+	date
+	ansible-playbook -i hosts scaleway/remove_vms.yml
+	date
