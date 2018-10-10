@@ -1,0 +1,70 @@
+---
+- hosts: bdxio
+  vars:
+    dbuser: denis
+    dbname: mydb
+    dbpass: "myreallyawesomepassword"
+  tasks:
+################################################################################
+#Install prerequisites
+################################################################################
+  - name: "Install packages"
+    yum:
+      name: "{{item}}"
+      state: latest
+    loop:
+      - python-pip
+      - postgresql-server
+      - git
+
+  - name: "Install pip dependancies"
+    pip:
+      name: "{{item}}"
+    loop:
+      - psycopg2-binary
+      - flask
+################################################################################
+#Configure database
+################################################################################
+  - name: Configure postgresql for the first time
+    shell: initdb /var/lib/pgsql/data > /var/lib/pgsql/initdb.log
+    args:
+      creates: /var/lib/pgsql/initdb.log
+    become: true
+    become_user: postgres
+
+  - name: "Start and enable postgreSQL"
+    systemd:
+      name: postgresql
+      state: started
+      enabled: yes
+
+  - name: "Create PostgreSQL user {{dbuser}}"
+    postgresql_user:
+      name: "{{dbuser}}"
+      password: "{{dbpass}}"
+    become: true
+    become_user: postgres
+
+  - name: "Create {{dbname}} postgreSQL database, owned by {{dbuser}}"
+    postgresql_db:
+      name: "{{dbname}}"
+      owner: "{{dbuser}}"
+    become: true
+    become_user: postgres
+################################################################################
+#Copy application on server
+################################################################################
+  - name: "Copy static Flask resources on server"
+    copy:
+      src: "{{item}}"
+      dest: "."
+    loop:
+      - static
+      - templates
+
+  - name: "Copy Flask python application on server"
+    template:
+      src: buttonclicker.py.j2
+      dest: buttonclicker.py
+      mode: 0700
