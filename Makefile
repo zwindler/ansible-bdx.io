@@ -16,9 +16,7 @@ generate: checkvar
 	date
 
 inventory: checkvar 
-	ansible-inventory --list -i scaleway/inventory.yml
-
-scan: checkvar
+	ansible-inventory --list -i scaleway/inventory.yml | more
 	ansible-inventory --list -i scaleway/inventory.yml | jq -r '.bdxio.hosts | .[]' | xargs ssh-keyscan >> ~/.ssh/known_hosts
 
 install:
