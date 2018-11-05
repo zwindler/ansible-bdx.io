@@ -1,12 +1,12 @@
 ---
 - hosts: localhost
   connection: local
-  tasks: 
+  tasks:
   - name: "Add SSH key"
     scaleway_sshkey:
       ssh_pub_key: "{{lookup('file', 'admin.pub') }}"
-      state: "present"  
-  - name: "Create my servers"
+      state: "present"
+  - name: "Create my server"
     scaleway_compute:
       name: bdxio1
       state: running
@@ -16,4 +16,3 @@
       commercial_type: START1-S
       wait: true
       tags: bdxio
-#    with_sequence: count=3

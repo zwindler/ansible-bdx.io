@@ -3,11 +3,8 @@ ifndef SCW_API_KEY
   $(error SCW_API_KEY is not set)
 endif
 
-init:
-	export ANSIBLE_HOST_KEY_CHECKING=False
-	mv /root/.ssh/known_hosts /root/.ssh/known_hosts.ori
-
 clean: 
+	sed -ri '/^([0-9]+\.){3}[0-9]+ /d' ~/.ssh/known_hosts
 	rm scaleway/*.retry digitalocean/*.retry *.retry
 
 generate: checkvar
