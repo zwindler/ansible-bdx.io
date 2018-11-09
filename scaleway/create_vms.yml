@@ -6,9 +6,9 @@
     scaleway_sshkey:
       ssh_pub_key: "{{lookup('file', 'admin.pub') }}"
       state: "present"
-  - name: "Create my server"
+  - name: "Create my servers"
     scaleway_compute:
-      name: bdxio1
+      name: bdxio{{item}}
       state: running
       image: "37832f54-c18f-4338-a552-113e4302a236"
       organization: 1bb690d9-1039-4316-abec-91903df637af
@@ -16,3 +16,7 @@
       commercial_type: START1-S
       wait: true
       tags: bdxio
+    loop:
+      - "dev"
+      #- "test"
+      #- "prod"
